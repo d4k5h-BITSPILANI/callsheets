@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { createClient } from '@supabase/supabase-js';
 import GroupIcon from '@mui/icons-material/Group';
+import LogoutIcon from '@mui/icons-material/Logout';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { useAuth } from './AuthContext'; 
 import axios from 'axios';
@@ -461,8 +462,8 @@ const Sidebar = ({ id,projects, setProjects, currentProject, setCurrentProject }
         fullwidth="true"
         className="project-input"
       />
-      <button onClick={addProject} className="add-project-button">Add Project</button>
-      <button className='logout' onClick={Logout}>Logout</button>
+      <button onClick={addProject} className="add-project-button">+ Add Project</button>
+      <button className='logout' onClick={Logout}><LogoutIcon style={{ marginRight: 5,marginBottom:-5 }}/>Logout</button>
     </div>
   );
 };
