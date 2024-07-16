@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Typography, Container, Grid, Paper, TextField, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import { Box, Button, Typography, Container, Grid, Paper, TextField, List, ListItem, ListItemText, IconButton,Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@mui/material';
 import './styles.css';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -61,10 +61,9 @@ const FileUpload = ({ type, currentProject }) => {
       if (response.status === 200) {
 //        console.log('File uploaded successfully:', response.data);
         setUploadSuccess(true);
-        setTimeout(() => {
-          setUploadSuccess(false);
-          setFile('');
-        }, 12000);
+        // setTimeout(() => {
+        //   setUploadSuccess(false);
+        // }, 12000);
       } else {
         // console.error('Error uploading file:', response.status, response.data);
         alert('Error uploading file:', response.status, response.data);
@@ -96,9 +95,18 @@ const FileUpload = ({ type, currentProject }) => {
         )}
       </div>
 
-      <div className="toggle-button" onClick={toggleScriptFormat}>
+      {/* <div className="toggle-button" onClick={toggleScriptFormat}>
         {scriptFormat === 'parse-script' ? 'Upload (PDF) - Final Draft' : 'Upload (PDF) - Other Formats'}
-      </div>
+      </div> */}
+
+<FormControl component="fieldset" className="format-selector">
+  <FormLabel component="legend">Choose Format:</FormLabel>
+  <RadioGroup row aria-label="script format" name="scriptFormat" value={scriptFormat} onChange={(event) => setScriptFormat(event.target.value)}>
+    <FormControlLabel value="parse-script" control={<Radio />} label="Upload (PDF) - Final Draft" />
+    <FormControlLabel value="add-script" control={<Radio />} label="Upload (PDF) - Other Formats" />
+  </RadioGroup>
+</FormControl>
+
 
       <button 
       onClick={uploadFile} 
@@ -322,9 +330,9 @@ const CrewUpload = ({ type, currentProject }) => {
       } else {
         console.log('Data uploaded successfully:', insertData, error);
         setUploadSuccess(true);
-        setTimeout(()=>{
-          setUploadSuccess(false);
-        },[12000]);
+        // setTimeout(()=>{
+        //   setUploadSuccess(false);
+        // },[12000]);
       }
     } catch (error) {
       console.error('Error processing file:', error.message);
