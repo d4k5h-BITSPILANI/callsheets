@@ -399,21 +399,36 @@ const Sidebar = ({ id,projects, setProjects, currentProject, setCurrentProject }
   }, [id]);
 
   const addProject = async () => {
-    const { data, error } = await supabase
+    // Insert into the 'project' table
+    const { data: projectData, error: projectError } = await supabase
       .from('project')
-      .insert([{ project_name: newProject, user_id: id }]).select();
+      .insert([{ project_name: newProject, user_id: id }])
+      .select();
 
-    if (error) {
-      //console.error('Error adding new project:',data, error.message);
+    if (projectError) {
+      console.error('Error adding new project:', projectError.message);
       return;
     }
-    const addedProject = data[0];
-    setProjects([addedProject,...projects]);
+
+    const addedProject = projectData[0];
+    
+    // Insert into the 'user_projects_mapping' table
+    const { data: mappingData, error: mappingError } = await supabase
+      .from('user_projects_mapping')
+      .insert([{ user_id: id, project_id: addedProject.project_id }])
+      .select();
+
+    if (mappingError) {
+      console.error('Error adding to user_projects_mapping:', mappingError.message);
+      return;
+    }
+
+    setProjects([addedProject, ...projects]);
     setNewProject('');
     setCurrentProject(addedProject);
-    console.log(newProject);
-  
+    console.log('New project added:', newProject);
   };
+
 
   // const deleteProject = async (projectId) => {
   //   const { error } = await supabase
