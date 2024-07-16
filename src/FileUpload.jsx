@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography, Container, Grid, Paper, TextField, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import './styles.css';
 import { useLocation } from 'react-router-dom';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { createClient } from '@supabase/supabase-js';
+import GroupIcon from '@mui/icons-material/Group';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { useAuth } from './AuthContext'; 
 import axios from 'axios';
 const supabaseUrl = 'https://bbzeapqhbmyrggqphapv.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJiemVhcHFoYm15cmdncXBoYXB2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk2NTY0MjUsImV4cCI6MjAyNTIzMjQyNX0.3a9JTgNQ6-atB9XgrRZeOfl-vP6E4hp_ajzm3xGRYDc';
 export const supabase = createClient(supabaseUrl, supabaseKey);
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import CircularProgress from '@mui/material/CircularProgress';
 import './styles.css'
 import * as XLSX from 'xlsx';
 
@@ -43,7 +46,8 @@ const FileUpload = ({ type, currentProject }) => {
 
     try {
       const response = await axios.post(
-        `https://callsheet-backend.centralindia.cloudapp.azure.com/${scriptFormat}/?callsheet_id=${callsheetId}&project_id=${projectId}`,
+        'https://httpbin.org/post',
+        //`https://callsheet-backend.centralindia.cloudapp.azure.com/${scriptFormat}/?callsheet_id=${callsheetId}&project_id=${projectId}`,
         formData,
         {
           headers: {
@@ -58,7 +62,8 @@ const FileUpload = ({ type, currentProject }) => {
         setUploadSuccess(true);
         setTimeout(() => {
           setUploadSuccess(false);
-        }, 2000);
+          setFile('');
+        }, 12000);
       } else {
         // console.error('Error uploading file:', response.status, response.data);
         alert('Error uploading file:', response.status, response.data);
@@ -73,9 +78,9 @@ const FileUpload = ({ type, currentProject }) => {
 
   return (
     <Box component={Paper} p={0.8} mb={3} className="upload-box">
-      <p className='upload-sub'>Your {type}</p>
+      <p className='upload-sub'><InsertDriveFileIcon style={{ marginRight: 5,marginBottom:-5 }}/>Your {type}</p>
       <input
-        name="a"
+        
         type="file"
         accept=".pdf, .xlsx, .xls"
         className="upload"
@@ -94,9 +99,21 @@ const FileUpload = ({ type, currentProject }) => {
         {scriptFormat === 'parse-script' ? 'Upload (PDF) - Final Draft' : 'Upload (PDF) - Other Formats'}
       </div>
 
-      <button onClick={uploadFile} disabled={uploading || !currentProject} className="upload-button">
-        {uploading ? 'Uploading...' : `Upload ${type}`}
-      </button>
+      <button 
+      onClick={uploadFile} 
+      disabled={uploading || !currentProject} 
+      className="upload-button"
+    >
+      {uploading ? (
+        <>
+          <CircularProgress size={20} /> Uploading...
+        </>
+      ) : (
+        <>
+          <CloudUploadIcon style={{ marginRight: 8,marginBottom:-5 }} /> Upload {type}
+        </>
+      )}
+    </button>
     </Box>
   );
 };
@@ -147,7 +164,7 @@ const FileUpload1 = ({ type, currentProject }) => {
 
   return (
     <Box component={Paper} p={0.8} mb={3} className="upload-box">
-      <p className='upload-sub'>Your {type}</p>
+      <p className='upload-sub'> <InsertDriveFileIcon style={{ marginRight: 5,marginBottom:-5 }}/> Your {type}</p>
       <input
         name="a"
         type="file"
@@ -161,9 +178,21 @@ const FileUpload1 = ({ type, currentProject }) => {
       </div>
 
 
-      <button onClick={uploadFile} disabled={uploading || !currentProject} className="upload-button">
-        {uploading ? 'Uploading...' : `Upload ${type}`}
-      </button>
+      <button 
+      onClick={uploadFile} 
+      disabled={uploading || !currentProject} 
+      className="upload-button"
+    >
+      {uploading ? (
+        <>
+          <CircularProgress size={20} /> Uploading...
+        </>
+      ) : (
+        <>
+          <CloudUploadIcon style={{ marginRight: 8,marginBottom:-5 }} /> Upload {type}
+        </>
+      )}
+    </button>
     </Box>
   );
 };
@@ -223,7 +252,10 @@ const CastUpload = ({ type, currentProject }) => {
 
   return (
     <Box component={Paper} p={0.8} mb={3} className="upload-box">
-      <p className='upload-sub'>Your {type}</p>
+      <p className='upload-sub'>
+        <GroupIcon style={{ marginRight: 5,marginBottom:-5 }}/>  {/* Icon representing 'crew' */}
+        {type}
+    </p>
       <input
         name="a"
         type="file"
@@ -301,7 +333,10 @@ const CrewUpload = ({ type, currentProject }) => {
 
   return (
     <Box component={Paper} p={0.8} mb={3} className="upload-box">
-      <p className='upload-sub'>Your {type}</p>
+      <p className='upload-sub'>
+        <GroupIcon  style={{ marginRight: 5,marginBottom:-5 }} />  {/* Icon representing 'crew' */}
+        {type}
+    </p>
       <input
         name="a"
         type="file"
@@ -324,14 +359,17 @@ const CrewUpload = ({ type, currentProject }) => {
   );
 };
 
-const Sidebar = ({ id,projects, setProjects,currentProject, setCurrentProject }) => {
-  
+const Sidebar = ({ id,projects, setProjects, currentProject, setCurrentProject }) => {
+  const [listOpen, setListOpen] = useState(false);
   const navigate = useNavigate();
   const { logout } = useAuth();
   
   const Logout = () => {
     logout(); 
     navigate('/auth'); 
+  }
+  const toggleListVisibility = () => {
+    setListOpen(!listOpen); // Toggle the list visibility
   }
 
   const [newProject, setNewProject] = useState('');
@@ -364,48 +402,54 @@ const Sidebar = ({ id,projects, setProjects,currentProject, setCurrentProject })
       //console.error('Error adding new project:',data, error.message);
       return;
     }
-
-    setProjects([...projects, data[0]]);
+    const addedProject = data[0];
+    setProjects([addedProject,...projects]);
     setNewProject('');
-    setCurrentProject(newProject);
-    //console.log("data", data);
+    setCurrentProject(addedProject);
+    console.log(newProject);
   
   };
 
-  const deleteProject = async (projectId) => {
-    const { error } = await supabase
-      .from('project')
-      .delete()
-      .eq('project_id', projectId);
+  // const deleteProject = async (projectId) => {
+  //   const { error } = await supabase
+  //     .from('project')
+  //     .delete()
+  //     .eq('project_id', projectId);
 
-    if (error) {
-      //console.error('Error deleting project:', error.message);
-      return;
-    }
-    setProjects(projects.filter(project => project.project_id !== projectId));
-    if (currentProject.project_id === projectId) {
-      setCurrentProject(projects.length > 1 ? projects[0] : null);
-    }
-  };
+  //   if (error) {
+  //     //console.error('Error deleting project:', error.message);
+  //     return;
+  //   }
+  //   setProjects(projects.filter(project => project.project_id !== projectId));
+  //   if (currentProject.project_id === projectId) {
+  //     setCurrentProject(projects.length > 1 ? projects[0] : null);
+  //   }
+  // };
 
   return (
     <div className="sidebar">
       <img className='image-logo' src='https://bbzeapqhbmyrggqphapv.supabase.co/storage/v1/object/public/callsheets/Frame_167_2__1_.jpg' />
       <p className='mid-head'>My Projects</p>
-      <List className='list'>
-        {projects.map((project, index) => (
-          <ListItem button key={index} onClick={() => setCurrentProject(project)} className="project-item" style={{
-            backgroundColor: currentProject.project_id === project.project_id ? 'white' : 'inherit',
-            color: currentProject.project_id === project.project_id ? '#FC4E00' : 'inherit',
-            fontWeight: currentProject.project_id === project.project_id ? 'bold' : 'inherit'
-          }}>
-            <ListItemText primary={project.project_name}  className='list-item'/>
-            <button className="delete-button" onClick={() => deleteProject(project.project_id)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-              <DeleteIcon />
-            </button>
-          </ListItem>
-        ))}
-      </List>
+      <div style={{ display: 'flex', flexDirection:'row',alignItems: 'center', justifyContent: 'flex-start' }}>
+        <p className='subhead'onClick={toggleListVisibility} style={{ cursor: 'pointer' }}>{listOpen ? '▼' : '►'}Kindly Select a Project</p>
+        <p className='mid-head' onClick={toggleListVisibility} style={{ cursor: 'pointer',marginTop:-13 }}>
+          
+        </p>
+      </div>
+      {listOpen && (
+        <div className="scrollable-list" style={{ overflowY: 'auto', maxHeight: '300px' }}>
+          <List className='list'>
+            {projects.map((project, index) => (
+              <ListItem button key={index} onClick={() => setCurrentProject(project)} className="project-item" style={{
+                backgroundColor: currentProject.project_id === project.project_id ? 'white' : 'inherit',
+                color: currentProject.project_id === project.project_id ? '#FC4E00' : 'inherit',
+                fontWeight: currentProject.project_id === project.project_id ? 'bold' : 'inherit',
+              }}>
+                <ListItemText primary={project.project_name} className='list-item' />
+              </ListItem>
+            ))}
+          </List>
+        </div>)}
       <input
         label="New Project"
         value={newProject}

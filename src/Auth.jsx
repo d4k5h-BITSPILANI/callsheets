@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css'; 
@@ -66,7 +66,21 @@ const Auth = () => {
    //   console.error('Error requesting OTP:', error);
     }
   };
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter' && phoneNumber.length === 10) {
+            requestOTP();
+        }
+    };
 
+    // Attach the event listener to the document
+    document.addEventListener('keydown', handleKeyPress);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+        document.removeEventListener('keydown', handleKeyPress);
+    };
+}, [phoneNumber]); 
   return (
     <div className="container">
       <div className="left-container">

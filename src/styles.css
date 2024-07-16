@@ -22,11 +22,20 @@
   font-size: 6px;
 }
 
+.subhead{
+  margin-top: 1px;
+  font-size:smaller;
+  color: #FC4E00;
+}
 .delete-icon {
   width: 3px;
   height: 3px;
 }
 
+.list-item{
+  border-bottom: 2px;
+  border-color: #6c757d;
+}
 .list{
   margin-top: -20px;
   margin-left: -20px;
@@ -62,6 +71,7 @@
   font-size: 14px;
   color: #1A3556 ;
   margin-left: 10px;
+  
   margin-bottom: 3px;
 }
 .right-sub{
@@ -135,6 +145,7 @@
   margin-top: 20px; 
   border-radius: 6px;
   width: 65%;
+  border-width: 2px;
 }
 .logout{
   margin-top: 10px;
