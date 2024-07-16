@@ -78,7 +78,7 @@ const FileUpload = ({ type, currentProject }) => {
   };
 
   return (
-    <Box component={Paper} p={0.8} mb={3} className="upload-box">
+    <Box component={Paper} p={0.8} mb={8} className="upload-box">
       <p className='upload-sub'><InsertDriveFileIcon style={{ marginRight: 5,marginBottom:-5 }}/>Your {type}</p>
       <input
         
@@ -164,7 +164,7 @@ const FileUpload1 = ({ type, currentProject }) => {
   };
 
   return (
-    <Box component={Paper} p={0.8} mb={3} className="upload-box">
+    <Box component={Paper} p={0.8} mb={8} className="upload-box">
       <p className='upload-sub'> <InsertDriveFileIcon style={{ marginRight: 5,marginBottom:-5 }}/> Your {type}</p>
       <input
         name="a"
@@ -253,7 +253,7 @@ const CastUpload = ({ type, currentProject }) => {
 
   return (
     
-    <Box component={Paper} p={0.8} mb={3} className="upload-box">
+    <Box component={Paper} p={0.8} mb={8} className="upload-box">
       <p className='upload-sub'>
         <GroupIcon style={{ marginRight: 5,marginBottom:-5 }}/>  {/* Icon representing 'crew' */}
         {type}
@@ -336,7 +336,7 @@ const CrewUpload = ({ type, currentProject }) => {
 
   return (
     
-    <Box component={Paper} p={0.8} mb={3} className="upload-box">
+    <Box component={Paper} p={0.8} mb={8} className="upload-box">
       <p className='upload-sub'>
         <GroupIcon  style={{ marginRight: 5,marginBottom:-5 }} />  {/* Icon representing 'crew' */}
         {type}
