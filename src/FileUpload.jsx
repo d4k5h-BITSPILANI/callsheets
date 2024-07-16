@@ -251,6 +251,7 @@ const CastUpload = ({ type, currentProject }) => {
   };
 
   return (
+    
     <Box component={Paper} p={0.8} mb={3} className="upload-box">
       <p className='upload-sub'>
         <GroupIcon style={{ marginRight: 5,marginBottom:-5 }}/>  {/* Icon representing 'crew' */}
@@ -260,7 +261,7 @@ const CastUpload = ({ type, currentProject }) => {
         name="a"
         type="file"
         accept=".xlsx"
-        className="upload"
+        className="uploadcrew"
         onChange={handleFileChange}
       />
       <div className='mid-box'>
@@ -270,10 +271,11 @@ const CastUpload = ({ type, currentProject }) => {
           </Typography>
         )}
       </div>
-      <button onClick={uploadFile} disabled={uploading || !currentProject} className="upload-button">
-        {uploading ? 'Uploading...' : `Upload ${type}`}
+      <button onClick={uploadFile} disabled={uploading || !currentProject} className="upload-button-crew">
+      <GroupIcon style={{ marginRight: 5,marginBottom:-5 }}/>{uploading ? 'Uploading...' : `Upload ${type}`}
       </button>
     </Box>
+    
   );
 };
 
@@ -332,6 +334,7 @@ const CrewUpload = ({ type, currentProject }) => {
   };
 
   return (
+    
     <Box component={Paper} p={0.8} mb={3} className="upload-box">
       <p className='upload-sub'>
         <GroupIcon  style={{ marginRight: 5,marginBottom:-5 }} />  {/* Icon representing 'crew' */}
@@ -341,7 +344,7 @@ const CrewUpload = ({ type, currentProject }) => {
         name="a"
         type="file"
         accept=".xlsx"
-        className="upload"
+        className="uploadcrew"
         onChange={handleFileChange}
       />
 
@@ -352,10 +355,11 @@ const CrewUpload = ({ type, currentProject }) => {
           </Typography>
         )}
       </div>
-      <button onClick={uploadFile} disabled={uploading || !currentProject} className="upload-button">
-        {uploading ? 'Uploading...' : `Upload ${type}`}
+      <button onClick={uploadFile} disabled={uploading || !currentProject} className="upload-button-crew">
+      <GroupIcon style={{ marginRight: 5,marginBottom:-5 }}/>{uploading ? 'Uploading...' : `Upload ${type}`}
       </button>
     </Box>
+    
   );
 };
 
@@ -504,8 +508,14 @@ const Upload = () => {
           <FileUpload type="Script" currentProject={currentProject}  />
           <FileUpload1 type="Shoot Schedule" currentProject={currentProject} />
 
-          <CrewUpload type="Crew" currentProject={currentProject} />
-          <CastUpload type="Cast" currentProject={currentProject} />
+<Grid container spacing={0} alignItems="center">
+      <Grid item xs={6} style={{ paddingRight: '1.5px' }}>
+        <CrewUpload type="Crew" currentProject={currentProject} />
+      </Grid>
+      <Grid item xs={6} style={{ paddingLeft: '1.5px' }}>
+        <CastUpload type="Cast" currentProject={currentProject} />
+      </Grid>
+    </Grid>
           </div>
         </Grid>
       </Grid>

@@ -96,6 +96,13 @@
   background-color:#1A3556 ;
   color: #e0e0e0;
 }
+.uploadcrew{
+  border: 0px;
+  padding-right: 75px;
+  padding-left: 25px;
+  background-color:#1A3556 ;
+  color: #e0e0e0;
+}
 .upload:hover{
   background-color: #fff ;
 }
@@ -140,6 +147,11 @@
   margin-top: 3px; 
   width: 90%;
   background-color: #1A3556;
+}
+.upload-button-crew {
+  margin-top: 3px; 
+  width: 90%;
+  background-color:#FC4E00;
 }
 .project-input {
   margin-top: 20px; 
