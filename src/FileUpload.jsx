@@ -139,8 +139,8 @@ const FileUpload1 = ({ type, currentProject }) => {
 
     try {
       const response = await axios.post(
-        `https://callsheet-backend.centralindia.cloudapp.azure.com/parse-schedule/?project_id=${projectId}`,
-
+        //`https://callsheet-backend.centralindia.cloudapp.azure.com/parse-schedule/?project_id=${projectId}`,
+        'https://httpbin.org/post',
         formData,
         {
           headers: {
