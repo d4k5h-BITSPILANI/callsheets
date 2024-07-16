@@ -131,7 +131,7 @@
 }
 
 .upload-button:disabled {
-  background-color: #6c757d;
+  background-color: #FC4E00;
   cursor: not-allowed;
 }
 
@@ -146,7 +146,7 @@
 .upload-button {
   margin-top: 3px; 
   width: 90%;
-  background-color: #1A3556;
+  background-color: #FC4E00;
 }
 .upload-button-crew {
   margin-top: 3px; 
