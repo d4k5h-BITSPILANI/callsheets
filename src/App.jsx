@@ -15,9 +15,9 @@ const App = () => {
           <Route path="/auth/otp" element={<OTP />} />
           <Route path="*" element={<Auth />} />
           <Route path="/upload" element={
-            <ProtectedRoute>
+            
               <Upload />
-            </ProtectedRoute>
+            
           } />
         </Routes>
       </AuthProvider>
