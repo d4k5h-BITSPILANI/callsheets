@@ -20,7 +20,7 @@
   }
 
   .right1-container {
-    margin-left: 248px;
+    margin-left: 135px;
     flex-direction: column;
     margin-right: 150px;
   }
@@ -32,16 +32,6 @@
     border-radius: 8px;
   }
   
-  .input1 {
-    background-color: #fff;
-    width: 90%;
-    border-color: #DEE4EB;
-    border-width: 2px;
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-weight: 300;
-    font-size: 16px;
-  }
   .left-container {
     flex: 1;
     display: flex;
@@ -77,6 +67,20 @@
   .code-receive {flex: 1;
     flex-direction: column;
   }
+  .input1 {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  text-align: center;
+  margin: 5px;
+  border: 2px solid #ccc; /* Change color based on focus or input */
+  outline: none;
+}
+
+.input1:focus {
+  border-color: #FC4E00; /* Color when focused */
+}
+
 /* 
   button:hover {
     background-color: #fc4e11; 
