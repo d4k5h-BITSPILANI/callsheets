@@ -431,7 +431,7 @@ const Sidebar = ({ id,projects, setProjects, currentProject, setCurrentProject }
       return;
     }
 
-    setProjects([addedProject, ...projects]);
+    setProjects([...projects,addedProject ]);
     setNewProject('');
     setCurrentProject(addedProject);
     console.log('New project added:', newProject);
