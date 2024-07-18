@@ -9,6 +9,7 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 const Auth = () => {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const navigate = useNavigate();
 
@@ -17,6 +18,8 @@ const Auth = () => {
       alert("Please enter a valid 10-digit phone number.");
       return;
     }
+    setIsButtonDisabled(true);
+
 
     try {
             
@@ -27,13 +30,15 @@ const Auth = () => {
       
 //      console.log('Query result:', data, 'Error:', error);
 
-      if (error) {
+            if (error) {
         console.error('Error querying Supabase:', error);
         alert("An error occurred while checking the user.");
+        setIsButtonDisabled(false);
         return;
       }
-      if (!data || data==null|| data.length===0) {
+      if (!data || data.length === 0) {
         alert("First create a user by logging in through the phone app");
+        setIsButtonDisabled(false);
         return;
       }
 
@@ -63,6 +68,7 @@ const Auth = () => {
         email:user.email
       } });
     } catch (error) {
+      setIsButtonDisabled(false);
    //   console.error('Error requesting OTP:', error);
     }
   };
@@ -81,6 +87,20 @@ const Auth = () => {
         document.removeEventListener('keydown', handleKeyPress);
     };
 }, [phoneNumber]); 
+useEffect(() => {
+  const handleNavigate = () => {
+    setIsButtonDisabled(false);
+  };
+
+  // Re-enable button if user navigates back to this page
+  window.addEventListener('popstate', handleNavigate);
+
+  // Cleanup the event listener when the component unmounts
+  return () => {
+    window.removeEventListener('popstate', handleNavigate);
+  };
+}, []);
+
   return (
     <div className="container">
       <div className="left-container">
@@ -101,7 +121,13 @@ const Auth = () => {
             maxLength="10"
           />
           </div>
-        <button onClick={requestOTP}>Continue</button>
+         <button 
+          onClick={requestOTP} 
+          disabled={isButtonDisabled}
+          style={{ backgroundColor: isButtonDisabled ? 'grey' : '#FC4E00' }}
+        >
+          Continue
+        </button>
         </div>
       </div>
     </div>
