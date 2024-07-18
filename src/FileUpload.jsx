@@ -373,7 +373,7 @@ const CrewUpload = ({ type, currentProject }) => {
 };
 
 const Sidebar = ({ id,projects, setProjects, currentProject, setCurrentProject }) => {
-  const [listOpen, setListOpen] = useState(false);
+  const [listOpen, setListOpen] = useState(true);
   const navigate = useNavigate();
   const { logout } = useAuth();
   
